@@ -1,6 +1,6 @@
 # 가상환경 이름
 __library/
-*.txt
+person_info.txt
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
