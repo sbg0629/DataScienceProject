@@ -1,6 +1,9 @@
 # 가상환경 이름
 __library/
 person_info.txt
+test.py
+chromedriver.exe
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

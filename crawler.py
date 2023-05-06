@@ -4,16 +4,15 @@ from selenium.webdriver.common.by import By
 import os
 import time
 
-# 아이디, 비밀번호 가져오기
-f = open('person_info.txt', 'r')
-p_info = f.read().split('\n')
-f.close()
-test_id = p_info[0]
-test_pw = p_info[1]
-
-def book_list(test=False, id=test_id, pw=test_pw):
-    driver_path = os.getcwd() + "\chromedriver.exe"
-    driver = webdriver.Chrome(driver_path)
+def book_list(id, pw, test=False):
+    start = time.time()
+    # print(id, pw)
+    try:
+        driver_path = os.getcwd() + "\chromedriver.exe"
+        driver = webdriver.Chrome(driver_path)
+    except:
+        print("크롬 드라이버가 없습니다. chromedriver.exe를 다운받아 현재 디렉토리에 넣어주세요.")
+        return
     driver.maximize_window()
     driver.get("https://lib.deu.ac.kr/")
     login_bnts = driver.find_element(By.XPATH, "/html/body/form[1]/header/div/div[1]/ul/li[4]/a")
@@ -29,4 +28,6 @@ def book_list(test=False, id=test_id, pw=test_pw):
         for i in range(30):
             print(i + 1)
             time.sleep(1)
+    print("대출 목록 불어오기 완료")
     driver.close()
+    print("크롤링 시간 {:.2f}초".format(time.time() - start))
