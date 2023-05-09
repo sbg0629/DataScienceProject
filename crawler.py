@@ -6,7 +6,6 @@ import time
 
 def book_list(id, pw, test=False):
     start = time.time()
-    # print(id, pw)
     try:
         driver_path = os.getcwd() + "\chromedriver.exe"
         driver = webdriver.Chrome(driver_path)
@@ -24,10 +23,22 @@ def book_list(id, pw, test=False):
     driver.find_element(By.XPATH, "/html/body/form[1]/header/nav/div[1]/ul[2]/li[2]/a").click()
     time.sleep(3)
     driver.get("https://lib.deu.ac.kr/lend_lend.mir")
+
+    print("\n\n대출 목록 불러오는 중...\n")
+    try:
+        # driver.implicitly_wait(3)
+        research = driver.find_element(By.CLASS_NAME, "btn btn_mir_view btn-sm")
+        research.click()
+    except:
+        print("대출 기록을 조회에 실패했습니다.")
     if test:
         for i in range(30):
             print(i + 1)
             time.sleep(1)
     print("대출 목록 불어오기 완료")
     driver.close()
-    print("크롤링 시간 {:.2f}초".format(time.time() - start))
+    
+    if test == False:
+        print("크롤링 시간 {:.2f}초".format(time.time() - start))
+    else:
+        print("크롤링 시간 {:.2f}초".format(time.time() - start - 30))
