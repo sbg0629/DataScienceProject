@@ -21,10 +21,7 @@
 ### PR 방법
 
 1. **새로운 Branch 생성**
-2. **TIL repo를 본인 계정에 fork**
+2. **repo를 본인 계정에 fork**
 3. `fork`된 repository `clone`
-4. **[계정이름]/README.md를 작성!**
-5. TIL과 url을 적은 README.md 파일을 `commit` `push`
-6. **웹사이트로 본인 계정의 `fork` 된 repo로 가기!**
-7. **Contribute → Open pull request 로 PR!**
-   - base repo : `원본repo` base : `be/a/gitusername` ← head repo : `여러분fork한repo` compare : `여러분fork한repo`
+4. 수정한 파일을 `commit` `push`
+5. **웹사이트로 본인 계정의 `fork` 된 repo로 가기!**
