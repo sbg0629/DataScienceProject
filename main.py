@@ -23,4 +23,4 @@ def inputData():
 def EarthAndMoon():
     return render_template("EarthAndMoon.html")
 
-app.run(debug=True, host="0.0.0.0")
+app.run(debug=True)
