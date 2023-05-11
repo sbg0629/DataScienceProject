@@ -21,7 +21,7 @@ def book_list(id, pw, test=False):
     inputs[0].send_keys(id)
     inputs[1].send_keys(pw, Keys.ENTER)
     
-    # time.sleep(1)
+    time.sleep(1)
 
     try:
 

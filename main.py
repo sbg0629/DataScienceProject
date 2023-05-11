@@ -9,7 +9,7 @@ db = { "student_number" : [20220001, 20221234],
 app = Flask("Bookmate")
 
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def home():
     return render_template("home.html")
 
@@ -17,7 +17,7 @@ def home():
 @app.route("/UserData", methods=["GET", "POST"])
 def inputData():
     id, pw = "", ""
-    if request.method == "POST":
+    if request.method == "POST" or request.method == "GET":
         id = request.form.get("ID")
         pw = request.form.get("PASSWORD")
         id_len = len(id)
