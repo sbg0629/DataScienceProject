@@ -34,12 +34,13 @@ def inputData():
 
     user_book_list = book_list(id=id, pw=pw)
     if user_book_list == 0:
-        print("웹 페이지 출력: 비밀번호 불일치")
+        print("웹 페이지 로딩 오류")
         return redirect("/")
+        return redirect("/", page_code=0)
     
-    return f"불일치 아이디: {id}, 비밀번호: {pw}, 길이: {id_len} 학번 리스트: {db['student_number']}"
+    # return f"불일치 아이디: {id}, 비밀번호: {pw}, 길이: {id_len} 학번 리스트: {db['student_number']}"
     
-    return render_template("SearchResult.html")
+    return render_template("SearchResult.html", id=id)
 
 
 # 이스터 에그, html 연습용
