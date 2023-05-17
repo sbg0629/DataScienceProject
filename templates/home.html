@@ -40,6 +40,7 @@
                     function check_info() {
                         var id = document.getElementsByName("ID")[0].value;
                         var pw = document.getElementsByName("PASSWORD")[0].value;
+                        // id 타입 체크하기
                         if (id == "" && pw == "") {
                             alert("아이디와 비밀번호를 입력하세요.");
                             // return false;
@@ -68,17 +69,16 @@
                 <button>Login</button> -->
             </div>
             <div class="row">
-                <div class="col-sm-4"></div>
                 <div class="col-sm-4">
                     <button>
                         <h6>카테고리 별 추천 받기</h6>
                     </button>
                 </div>
-                <!-- <div class="col-sm-4">
-                    <h3>열 2</h3>
+                <div class="col-sm-4">
+                    <h3>열 1</h3>
                     <p>아름다운 한강...</p>
                     <p>한강은 크고 깨끗하며 아름답습니다...</p>
-                </div> -->
+                </div>
                 <div class="col-sm-4">
                     <h3>열 3</h3>        
                     <p>설악산...</p>
