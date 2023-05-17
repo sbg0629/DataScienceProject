@@ -52,6 +52,9 @@ def inputData():
         # 현재는 작동하지 않는 코드, html 파일에 page_code를 넘겨주는 방식으로 변경해야 함(문제가 발생하면 홈으로 리다이렉트하고 알람을 띄우기 위함)
         return redirect("/", page_code=0)
     
+    elif user_book_list == 1:
+        print("대출 기록이 없습니다.")
+        return redirect("/")
     # 코드가 정상적으로 작동하면 SearchResult.html 페이지에 책 리스트 출력
     return render_template("SearchResult.html", id=user_book_list)
 
