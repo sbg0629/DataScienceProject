@@ -4,7 +4,6 @@ from crawler import book_list
 # 데이터베이스 + 더미 데이터
 db = { "student_number" : [20220001, 20221234], 
       "book_list" : {},
-      "update_time" : {},
       }
 
 # 페이지 이름 설정
@@ -37,7 +36,7 @@ def inputData():
     for student_number_list in db["student_number"]:
         if id == student_number_list:
             # 아이디가 일치하면 단순히 아이디와 비밀번호를 출력
-            return f"일치 아이디: {id}, 비밀번호: {pw}, 길이: {id_len} 학번 리스트: {db['student_number']}"
+            return render_template("SearchResult.html")
         
     # 데이터베이스에 학번이 없으면 데이터베이스에 학번 추가
     db["student_number"].append(id)
@@ -56,7 +55,7 @@ def inputData():
         print("대출 기록이 없습니다.")
         return redirect("/")
     # 코드가 정상적으로 작동하면 SearchResult.html 페이지에 책 리스트 출력
-    return render_template("SearchResult.html", id=user_book_list)
+    return render_template("SearchResult.html")
 
 
 # 이스터 에그, html 연습용
