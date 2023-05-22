@@ -79,6 +79,7 @@ def book_list(id, pw, test=False):
     for a_book in SeleniumBookNameList[1:]:
         a_book = a_book.text.split('/')
         booknamelist.append(a_book)
+        # booknamelist.append(a_book[0])
 
     # 크롬 드라이버 종료
     driver.close()
