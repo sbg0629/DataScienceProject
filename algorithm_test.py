@@ -29,10 +29,18 @@ def recomand(code, test=False):
 
         driver.find_element(By.CLASS_NAME, "book_title").click()
 
-        for j in range(1, 4): # 사이트 분야 Best 도서 3개를 돌리는 for 문
-            xpath = '//*[@id="data_data_lend_best_scope"]/div/div[2]/ul/li[{}]/a/dl/dt'.format(j) # 포맷팅용
-            bestlist = driver.find_element(By.XPATH, xpath).text # 리스트에 텍스트로 저장
-            bestlistname = re.sub(r'\s*/.*$', '', bestlist) # 정규식으로 책 이름만 저장
-            list.append(bestlistname) # 리스트에 append
+        for j in range(1, 4):
+            xpath = '//*[@id="data_data_lend_best_scope"]/div/div[2]/ul/li'
+            if j > 1:
+                xpath += '[{}]'.format(j)
+            xpath += '/a/dl/dt'
+            
+            elements = driver.find_elements(By.XPATH, xpath)
+            if not elements:
+                break
+            
+            bestlistname = re.sub(r'\s*/.*$', '', elements[0].text)
+            list.append(bestlistname)
+
         driver.quit()
     return list # 리스트 리턴
