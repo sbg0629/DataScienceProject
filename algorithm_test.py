@@ -27,5 +27,3 @@ def recomand(code, test=False):
     driver.find_element(By.CLASS_NAME, "book_title").click()
 
     driver.quit()
-
-recomand("E000906893")
