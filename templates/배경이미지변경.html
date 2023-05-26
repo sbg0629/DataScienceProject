@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            background-image: url("img/동의대도서관.jpg"); /* 초기 배경 이미지 설정 */
+            background-size: cover;
+        }
+    </style>
+    <script>
+        // 배경 이미지 변경 함수
+        function changeBackground() {
+            // 배경 이미지 URL 배열
+            var images = ["img/270D6741538C6A8817.jpg", "img/400_1260681611525412.jpg", "img/2018-10-30.jpg"];
+            
+            // 현재 배경 이미지 인덱스
+            var currentIndex = 0;
+            
+            // 배경 이미지 변경
+            setInterval(function() {
+                currentIndex = (currentIndex + 1) % images.length; // 다음 이미지 인덱스 계산
+                document.body.style.backgroundImage = "url(" + images[currentIndex] + ")"; // 배경 이미지 변경
+            }, 5000); // 5초마다 배경 이미지 변경
+        }
+        
+        // 페이지 로드 시 배경 이미지 변경 함수 호출
+        window.onload = changeBackground;
+    </script>
+</head>
+<body>
+    <!-- 내용을 추가하세요 -->
+</body>
+</html>
