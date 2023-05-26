@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from crawler import book_list
+from algorithm_test import recommand
 
 # 데이터베이스 + 더미 데이터
 db = { "student_number" : [20220001, 20221234], 
@@ -23,10 +24,9 @@ def inputData():
         # 사용자가 입력한 데이터를 받아옴
         id = request.form.get("ID")
         pw = request.form.get("PASSWORD")
-        id_len = len(id)
 
     # 사용자가 입력한 데이터가 없거나, 학번이 8자리가 아니면 홈으로 리다이렉트
-    if (id == "" or pw == "") or (id == None or pw == None) or (id_len != 8):
+    if (id == "" or pw == "") or (id == None or pw == None) or (len(id) != 8):
         return redirect("/")
     
     # 사용자가 입력한 데이터를 데이터베이스에 저장하기 위한 형변환
