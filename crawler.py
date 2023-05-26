@@ -95,7 +95,16 @@ def book_list(id, pw, ReturnData=1):
             for BookNameOrWriter in bookdata:
                 bookdatalist[count].append(BookNameOrWriter)
             count += 1
-
+    # 4 도서 등록 번호, 도서 이름
+    elif ReturnData == 4:
+        SeleniumBookList = driver.find_elements(By.CLASS_NAME, "text-center")
+        for datalist in SeleniumBookList[2::2]:
+            bookdatalist.append([datalist.text])
+        SeleniumBookList = driver.find_elements(By.CLASS_NAME, "text-left")
+        count = 0
+        for bookdata in SeleniumBookList[1:]:
+            bookdatalist[count].append(bookdata.text.split('/')[0])
+            count += 1
     # 크롬 드라이버 종료
     driver.close()
     
