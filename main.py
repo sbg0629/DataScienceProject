@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from crawler import book_list
-from algorithm_test import recomand
+from algorithm_test import recommand
 
 # 데이터베이스 + 더미 데이터
 db = { "student_number" : [20220001, 20221234], 
