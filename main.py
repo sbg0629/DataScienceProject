@@ -64,4 +64,4 @@ def EarthAndMoon():
     return render_template("EarthAndMoon.html")
 
 # debug 모드로 실행
-app.run(debug=True, host="0.0.0.0")
+app.run(debug=True)
