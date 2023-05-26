@@ -109,3 +109,10 @@ def book_list(id, pw, ReturnData=1):
     
     # bookcodelist가 비어있지 않으면 bookcodelist를 반환
     return bookdatalist
+
+def ListToTextFile(x):
+    f = open("BookList.txt", "w")
+    for i in x:
+        print(i)
+        f.write(f"{str(i)}\n")
+    f.close()
