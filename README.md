@@ -16,7 +16,7 @@
 <br/>
 
 ### 진행 일정
-<img src="images/plan.png"/>
+<img src="static/css/img/plan.png"/>
 
 ### PR 방법
 
