@@ -36,7 +36,7 @@ def book_list(id, pw, ReturnData=1):
     driver.find_element(By.XPATH, "/html/body/form[1]/header/div/div[1]/ul/li[4]/a").click()
 
     # 페이지 로딩을 위해 3초 대기 로딩이 끝나면 3초가 다 안 지나도 다음 코드로 넘어감
-    driver.implicitly_wait(3)
+    driver.implicitly_wait(60)
 
     # 로그인 창에서 아이디와 비밀번호를 입력하고 엔터를 누름
     inputs = driver.find_elements(By.CLASS_NAME, "form-control")
@@ -61,7 +61,7 @@ def book_list(id, pw, ReturnData=1):
 
     # 대출 기록 페이지로 이동
     driver.get("https://lib.deu.ac.kr/lend_lend.mir")
-    driver.implicitly_wait(3)
+    driver.implicitly_wait(60)
 
     # 새로고침 버튼 클릭
     try:
