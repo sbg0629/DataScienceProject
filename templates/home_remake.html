@@ -7,6 +7,7 @@
     <!-- <meta name="description" content="A minimalist layout for Login pages. Built with Pico CSS." /> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/HomeCss.css') }}" />
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
   </head>
  
   <body>
@@ -20,13 +21,39 @@
     </nav>
     <!-- ./ Nav -->
 
+    <!-- Main -->
     <main class="container">
       <article class="grid">
         <div>
-          {{ key_word }}
+          <hgroup>
+            <h1>Sign in</h1>
+            <h2> </h2>
+            <h2>동의대학교 도서관 로그인</h2>
+          </hgroup>
+          <form action="/UserData" method="post">
+            <input
+              type="text"
+              name="ID"
+              placeholder="학번"
+              aria-label="Login"
+              autocomplete="nickname"
+              required
+            />
+            <input
+              type="password"
+              name="PASSWORD"
+              placeholder="비밀번호"
+              aria-label="Password"
+              autocomplete="current-password"
+              required
+            />
+            <button type="submit" class="contrast" onclick="check_info()">Login</button>
+          </form>
         </div>
+        <div></div>
       </article>
     </main>
+    <!-- ./ Main -->
     <footer class="container-fluid">
         <small
           >Team <a href="https://github.com/012050/DataScienceProject" class="secondary">Github</a> •
