@@ -57,8 +57,8 @@ def inputData():
     db["Students"][id] = user_book_list
 
     # 코드가 정상적으로 작동하면 SearchResult.html 페이지에 책 리스트 출력
-    return f"아이디 비번을 추가합니다.<br>아이디: {id} 비밀번호: {pw}<br>도서 목록: {db['Students'][id]}<br>천체 DB: {db}"
-    return render_template("SearchResult.html")
+    # return f"아이디 비번을 추가합니다.<br>아이디: {id} 비밀번호: {pw}<br>도서 목록: {db['Students'][id]}<br>천체 DB: {db}"
+    return render_template("SearchResult.html", key_word=db["Students"][id])
 
 
 # 이스터 에그, html 연습용
