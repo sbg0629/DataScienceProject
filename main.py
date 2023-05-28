@@ -37,8 +37,7 @@ def inputData():
     for student_number_list in db["Students"]:
         if id == student_number_list:
             # 아이디가 일치하면 단순히 아이디와 비밀번호를 출력
-            return f"일치<br>아이디: {id} 비밀번호: {pw}<br>도서 목록: {db['Students'][student_number_list]}<br>천체 DB: {db}"
-            return render_template("SearchResult.html")
+            return render_template("SearchResult.html", key_word=db["Students"][id])
         
     # 데이터베이스에 학번 추가 후, 해당 학번의 대출 리스트를 크롤링
     user_book_list = book_list(id=id, pw=pw)
@@ -57,7 +56,6 @@ def inputData():
     db["Students"][id] = user_book_list
 
     # 코드가 정상적으로 작동하면 SearchResult.html 페이지에 책 리스트 출력
-    # return f"아이디 비번을 추가합니다.<br>아이디: {id} 비밀번호: {pw}<br>도서 목록: {db['Students'][id]}<br>천체 DB: {db}"
     return render_template("SearchResult.html", key_word=db["Students"][id])
 
 
