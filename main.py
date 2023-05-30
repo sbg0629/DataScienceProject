@@ -15,11 +15,12 @@ app = Flask("Bookmate")
 @app.route("/", methods=["GET"])
 def home():
     # 사용자에게 home.html 파일을 보여줌
-    return render_template("home_remake.html")
+    return render_template("Home.html")
 
 # "기본 페이지 URL + /UserData" 라우팅
-@app.route("/UserData", methods=["GET", "POST"])
+@app.route("/UserData", methods=["POST"])
 def inputData():
+    global db
     id, pw = "", ""
     if request.method == "POST":
         # 사용자가 입력한 데이터를 받아옴
@@ -37,7 +38,7 @@ def inputData():
     for student_number_list in db["Students"]:
         if id == student_number_list:
             # 아이디가 일치하면 단순히 아이디와 비밀번호를 출력
-            return render_template("SearchResult.html", key_word=db["Students"][id])
+            return render_template("SearchResult.html", bookinfos=db["Students"][id], student_number=id)
         
     # 데이터베이스에 학번 추가 후, 해당 학번의 대출 리스트를 크롤링
     user_book_list = book_list(id=id, pw=pw)
@@ -45,18 +46,19 @@ def inputData():
     # 크롤링에 실패하면 홈으로 리다이렉트(크롤러는 작동 중 오류가 발생하면 0을 리턴)
     if user_book_list == 0:
         print("웹 페이지 로딩 오류")
-        return redirect("/")
         # 현재는 작동하지 않는 코드, html 파일에 page_code를 넘겨주는 방식으로 변경해야 함(문제가 발생하면 홈으로 리다이렉트하고 알람을 띄우기 위함)
-        return redirect("/", page_code=0)
+        return redirect("/")
     
     elif user_book_list == 1:
         print("대출 기록이 없습니다.")
+        return redirect("/")
     
     # 데이터베이스에 학번이 없으면 데이터베이스에 학번 추가
-    db["Students"][id] = user_book_list
+    else:
+        db["Students"][id] = user_book_list
 
     # 코드가 정상적으로 작동하면 SearchResult.html 페이지에 책 리스트 출력
-    return render_template("SearchResult.html", key_word=db["Students"][id])
+    return render_template("SearchResult.html", bookinfos=db["Students"][id], student_number=id)
 
 
 # 이스터 에그, html 연습용
