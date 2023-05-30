@@ -1,90 +1,66 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bookmate</title>
-    <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@1.*/css/pico.min.css">
-</head>
-<body>
-    <main class="container">
-        <h1 align="left">Bookmate</h1>
-        <h4 align="left">동의대학교 로그인</h4>
-        <form action="/search" method="get">
-            <input type="text" name="ID" placeholder="ID" />
-            <input type="password" name="PASSWORD" placeholder="password" />
-            <button>Login</button>
-        </form>
-    </main>
-</body>
-</html> -->
-
 <!DOCTYPE html>
 <html lang="ko-KR">
-    <head>
-        <title>Bookmate</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    </head>
-    <body>
-        <div class="container">
-            <div class="jumbotron">
-                <h1>Bookmate</h1>
-                <p>도서 대출 기록 확인과 책 추천을 한 번에!</p>
-                <h3>로그인</h3>
-                <script>
-                    function check_info() {
-                        var id = document.getElementsByName("ID")[0].value;
-                        var pw = document.getElementsByName("PASSWORD")[0].value;
-                        // id 타입 체크하기
-                        if (id == "" && pw == "") {
-                            alert("아이디와 비밀번호를 입력하세요.");
-                            // return false;
-                        }
-                        else if (id == ""){
-                            alert("아이디를 입력하세요.");
-                            // return false;
-                        }
-                        else if (pw == ""){
-                            alert("비밀번호를 입력하세요.");
-                            // return false;
-                        }
-                        else if (id.length != 8){
-                            alert("학번을 아이디로 입력해주세요.")
-                        }
-                        // return true;
-                    }
-                </script>
-                <form action="/UserData" method="post">
-                    <input type="text" name="ID" placeholder="ID" />
-                    <input type="password" name="PASSWORD" placeholder="password" /><br>
-                    <button onclick="check_info()">Login</button>
-                </form>
-                <!-- <input type="text" name="ID" placeholder="ID" />
-                <input type="password" name="PASSWORD" placeholder="password" /><br>
-                <button>Login</button> -->
-            </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <button>
-                        <h6>카테고리 별 추천 받기</h6>
-                    </button>
-                </div>
-                <div class="col-sm-4">
-                    <h3>열 1</h3>
-                    <p>아름다운 한강...</p>
-                    <p>한강은 크고 깨끗하며 아름답습니다...</p>
-                </div>
-                <div class="col-sm-4">
-                    <h3>열 3</h3>        
-                    <p>설악산...</p>
-                    <p>설악산은 높고 화려하며 빼어납니다...</p>
-                </div>
-            </div>
+  <head>
+    <meta charset="utf-8" />
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1" /> -->
+    <title>Bookmate</title>
+    <!-- <meta name="description" content="A minimalist layout for Login pages. Built with Pico CSS." /> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/HomeCss.css') }}" />
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </head>
+ 
+  <body>
+    <!-- Nav -->
+    <nav class="container-fluid">
+      <ul>
+        <li>
+          <a href="./" class="contrast"><strong>Bookmate</strong></a>
+        </li>
+      </ul>
+    </nav>
+    <!-- ./ Nav -->
+
+    <!-- Main -->
+    <main class="container">
+      <article class="grid">
+        <div>
+          <hgroup>
+            <h1>Sign in</h1>
+            <h2> </h2>
+            <h2>동의대학교 도서관 로그인</h2>
+          </hgroup>
+          <form action="/UserData" method="post">
+            <input
+              type="text"
+              name="ID"
+              placeholder="학번"
+              aria-label="Login"
+              autocomplete="nickname"
+              required
+            />
+            <input
+              type="password"
+              name="PASSWORD"
+              placeholder="비밀번호"
+              aria-label="Password"
+              autocomplete="current-password"
+              required
+            />
+            <button type="submit" class="contrast" onclick="check_info()">Login</button>
+          </form>
         </div>
-    </body>
+        <div></div>
+      </article>
+    </main>
+    <!-- ./ Main -->
+    <footer class="container-fluid">
+        <small
+          >Team <a href="https://github.com/012050/DataScienceProject" class="secondary">Github</a> •
+          <a href="http://door.deu.ac.kr/LMS/LectureRoom/Main/60593" class="secondary"
+            >DataScienceProgramming-Door</a
+          ></small
+        >
+      </footer>
+  </body>
 </html>
