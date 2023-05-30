@@ -8,7 +8,7 @@ import time
 # 정규식을 위한 모듈
 import re
 
-def recommand(code, test=False):
+def recommand(code):
     list = {}
     driver = webdriver.Chrome()
     try:
