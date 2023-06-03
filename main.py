@@ -3,8 +3,8 @@ from crawler import book_list
 from algorithm_test import recommand
 import time
 
-# 데이터베이스 + 더미 데이터
-db = { "Students" : {
+# 딕셔너리 데이터베이스 + 더미 데이터
+db_dic = { "Students" : {
     20220001 : ['오늘의 지구를 말씀드리겠습니다 :과학으로 읽는 지구 설명서', '(패러데이 ＆ 맥스웰) 공간에 펼쳐진 힘의 무대', '화학으로 이루어진 세상'],
     20220002 : ['연어의 시간 :길 잃은 물고기와 지구, 인간에 관하여', '모서리를 걸어요 6 :창작이십일작가회 이천이십이년 작품집', '불놀이']},
     }
@@ -36,10 +36,10 @@ def inputData():
     id, pw = int(id), str(pw)
 
     # 데이터베이스에 학번에 있는지 확인
-    for student_number_list in db["Students"]:
+    for student_number_list in db_dic["Students"]:
         if id == student_number_list:
             # 아이디가 일치하면 단순히 아이디와 비밀번호를 출력
-            return render_template("SearchResult.html", bookinfos=db["Students"][id], student_number=id, re_books=db[db["Students"][id]])
+            return render_template("SearchResult.html", bookinfos=db_dic["Students"][id], student_number=id, re_books=db_dic[db_dic["Students"][id]])
         
     # 데이터베이스에 학번 추가 후, 해당 학번의 대출 리스트를 크롤링
     user_book_list = book_list(id=id, pw=pw, ReturnData=3)
@@ -56,24 +56,24 @@ def inputData():
     
     # 데이터베이스에 학번이 없으면 데이터베이스에 학번 추가
     else:
-        db["Students"][id] = user_book_list
+        db_dic["Students"][id] = user_book_list
         re_books = recommand([item[0] for item in user_book_list])
 # --------------------------------------------------------------------------------------------
     #     [item[1] for item in user_book_list]
-    # for book_names in db["Students"][id][:][:-1]:
+    # for book_names in db_dic["Students"][id][:][:-1]:
     #     for book_name in book_names:
-    #         db[book_name] = re_books[book_name]
-        # db[str(re_books.keys())] = list(re_books.values())
-        # book_names = [item[1] for item in db["Students"][id]]
+    #         db_dic[book_name] = re_books[book_name]
+        # db_dic[str(re_books.keys())] = list(re_books.values())
+        # book_names = [item[1] for item in db_dic["Students"][id]]
         # for re_book_name in book_names:
-        #     db[re_book_name] = recommand([item[0] for item in db["Students"][id]])
-        # print(db[re_book_name])
+        #     db_dic[re_book_name] = recommand([item[0] for item in db_dic["Students"][id]])
+        # print(db_dic[re_book_name])
 
 
     print("총 걸린 시간: {:.2f}초\n".format(time.time() - start_time))
     # 코드가 정상적으로 작동하면 SearchResult.html 페이지에 책 리스트 출력
-    return render_template("SearchResult.html", bookinfos=db["Students"][id], student_number=id, re_books=re_books)
-    return render_template("SearchResult.html", bookinfos=db["Students"][id], student_number=id, re_books=db[db["Students"][id]])
+    return render_template("SearchResult.html", bookinfos=db_dic["Students"][id], student_number=id, re_books=re_books)
+    return render_template("SearchResult.html", bookinfos=db_dic["Students"][id], student_number=id, re_books=db_dic[db_dic["Students"][id]])
 
 
 # 이스터 에그, html 연습용
