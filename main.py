@@ -1,6 +1,11 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, g
+
 from crawler import book_list
 from algorithm_test import recommand
+from DataProcessing import sha512_hash, listTostr, strTolist
+from database.db import get_db, close_db
+
+import sqlite3
 import time
 
 # 딕셔너리 데이터베이스 + 더미 데이터
@@ -82,4 +87,5 @@ def EarthAndMoon():
     return render_template("EarthAndMoon.html")
 
 # debug 모드로 실행
-app.run(debug=True, host="0.0.0.0")
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0")
