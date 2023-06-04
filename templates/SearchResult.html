@@ -2,15 +2,17 @@
 <html lang="ko-KR">
   <head>
     <meta charset="utf-8" />
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1" /> -->
     <title>Bookmate</title>
-    <!-- <meta name="description" content="A minimalist layout for Login pages. Built with Pico CSS." /> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css" />
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/HomeCss.css') }}" />
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/HomeCss.css') }}" /> -->
+    <style>
+      body{
+        background-color: beige;
+      }
+    </style>
   </head>
- 
+
   <body>
-    <!-- Nav -->
     <nav class="container-fluid">
       <ul>
         <li>
@@ -18,14 +20,25 @@
         </li>
       </ul>
     </nav>
-    <!-- ./ Nav -->
 
     <main class="container">
-      <article class="grid">
-        <div>
-          {{ key_word }}
-        </div>
-      </article>
+      <hgroup>
+        <h2>{{ student_number }}님의 대출 기록</h2>
+          {% for bookcode in bookinfos %}
+          <br>
+          <article class="grid">
+            책 코드: {{ bookcode[0] }}<br>
+            책 이름: {{ bookcode[1] }}<br>
+            저자: {{ bookcode[2] }}
+            <h6>
+              추천 도서
+              <br>
+              {% for re_book in re_books %}
+                {{ re_book }}<br>
+              {% endfor %}
+          </article>
+          {% endfor %}
+      </hgroup>
     </main>
     <footer class="container-fluid">
         <small
@@ -34,6 +47,6 @@
             >DataScienceProgramming-Door</a
           ></small
         >
-      </footer>
+    </footer>
   </body>
 </html>
