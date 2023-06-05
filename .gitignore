@@ -5,6 +5,7 @@ test.py
 chromedriver.exe
 test.html
 BookList.txt
+*.db
 
 
 # Byte-compiled / optimized / DLL files
