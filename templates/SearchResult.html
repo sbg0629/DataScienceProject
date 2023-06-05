@@ -27,15 +27,17 @@
           {% for bookcode in bookinfos %}
           <br>
           <article class="grid">
-            책 코드: {{ bookcode[0] }}<br>
-            책 이름: {{ bookcode[1] }}<br>
-            저자: {{ bookcode[2] }}
-            <h6>
-              추천 도서
-              <br>
+            <spane>
+              책 코드: {{ bookcode[0] }}<br>
+              책 이름: {{ bookcode[1] }}<br>
+              저자: {{ bookcode[2] }}<br>
+            </spane>
+            <div>
+              <h6 style="display:inline;" >추천 도서</h6>
               {% for re_book in re_books %}
-                {{ re_book }}<br>
+              <br>{{ loop.index }}. {{ re_book }}
               {% endfor %}
+            </div>
           </article>
           {% endfor %}
       </hgroup>
