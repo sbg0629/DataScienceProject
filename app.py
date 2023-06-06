@@ -43,16 +43,11 @@ def inputData():
         id = request.form.get("ID")
         pw = request.form.get("PASSWORD")
 
-    # 사용자가 입력한 데이터가 없거나, 학번이 8자리가 아니면 홈으로 리다이렉트
-    if (id == "" or pw == "") or (id == None or pw == None) or (len(id) != 8):
-        return redirect("/")
-
     # 사용자가 입력한 데이터를 데이터베이스에 저장하기 위한 형변환
     id, pw = int(id), str(pw)
 
     # 데이터베이스에 학번에 있는지 확인
     result = cur.execute("SELECT * FROM StudentsData WHERE StudentNumber = ?", (id,)).fetchone()
-    print("\n\n\n\n\n\n", result)
     if result == None:
         user_book_list = book_list(id=id, pw=pw, ReturnData=3)
         # 크롤링에 실패하면 홈으로 리다이렉트(크롤러는 작동 중 오류가 발생하면 0을 리턴)
@@ -66,6 +61,9 @@ def inputData():
         
         cur.execute("INSERT INTO StudentsData (StudentNumber, HashPassword, BookList, CrawlingDate) VALUES (?, ?, ?, ?)", (id, sha512_hash(pw), listTostr(user_book_list), now_time()))
         re_books = recommand([item[0] for item in user_book_list])
+    elif result[1] != sha512_hash(pw):
+        print(f"아이디: {id}에 대한 비밀번호가 틀렸습니다.")
+        return redirect("/")
     else:
         user_book_list = []
         for book_code in strTolist(result[2]):
