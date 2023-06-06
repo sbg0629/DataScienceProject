@@ -52,30 +52,32 @@ def inputData():
 
     # 데이터베이스에 학번에 있는지 확인
     result = cur.execute("SELECT * FROM StudentsData WHERE StudentNumber = ?", (id,)).fetchone()
+    print("\n\n\n\n\n\n", result)
     if result == None:
         user_book_list = book_list(id=id, pw=pw, ReturnData=3)
+        # 크롤링에 실패하면 홈으로 리다이렉트(크롤러는 작동 중 오류가 발생하면 0을 리턴)
+        if user_book_list == 0:
+            print("웹 페이지 로딩 오류")
+            # 문제가 발생하면 홈으로 리다이렉트
+            return redirect("/")
+        elif user_book_list == 1:
+            print("대출 기록이 없습니다.")
+            return redirect("/")
+        
         cur.execute("INSERT INTO StudentsData (StudentNumber, HashPassword, BookList, CrawlingDate) VALUES (?, ?, ?, ?)", (id, sha512_hash(pw), listTostr(user_book_list), now_time()))
+        re_books = recommand([item[0] for item in user_book_list])
     else:
         user_book_list = []
         for book_code in strTolist(result[2]):
+            print(f"book_code: {book_code}")
             user_book_list.append(book_code[0])
-
-    # 데이터베이스에 학번 추가 후, 해당 학번의 대출 리스트를 크롤링
-
-    # 크롤링에 실패하면 홈으로 리다이렉트(크롤러는 작동 중 오류가 발생하면 0을 리턴)
-    if user_book_list == 0:
-        print("웹 페이지 로딩 오류")
-        # 문제가 발생하면 홈으로 리다이렉트
-        return redirect("/")
-    elif user_book_list == 1:
-        print("대출 기록이 없습니다.")
-        return redirect("/")
-    
-    # 데이터베이스에 학번이 없으면 데이터베이스에 학번 추가
-    else:
-        # re_books = recommand([item[0] for item in user_book_list])
         re_books = recommand(user_book_list)
         user_book_list = strTolist(result[2])
+
+    # re_books = recommand([item[0] for item in user_book_list])
+    # re_books = recommand(user_book_list)
+    # user_book_list = strTolist(result[2])
+
     conn.commit()
     cur.close()
     conn.close()
