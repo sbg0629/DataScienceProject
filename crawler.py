@@ -21,7 +21,7 @@ def book_list(id, pw, ReturnData=1):
         driver_path = os.getcwd() + "\chromedriver.exe"
         driver = webdriver.Chrome(driver_path)
     except:
-        print("크롬 드라이버가 없습니다. chromedriver.exe를 다운받아 현재 디렉토리에 넣어주세요.")
+        print("크롬 드라이버가 없거나 버전이 다릅니다. chromedriver.exe를 다운받아 현재 디렉토리에 넣어주세요.")
         return 0
     driver.maximize_window()
 
