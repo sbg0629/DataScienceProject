@@ -19,9 +19,6 @@ try:
         CrawlingDate TEXT
     );
     """)
-    conn.commit()
-    cur.close()
-    conn.close()
 except:
     print("테이블이 이미 존재합니다.")
 
@@ -42,7 +39,7 @@ def inputData():
     cur = conn.cursor()
     id, pw = "", ""
     if request.method == "POST":
-        # 사용자가 입력한 데이터를 받아옴
+        # 사용자가 입력한 데이ㅍ터를 받아옴
         id = request.form.get("ID")
         pw = request.form.get("PASSWORD")
 
@@ -54,9 +51,16 @@ def inputData():
     id, pw = int(id), str(pw)
 
     # 데이터베이스에 학번에 있는지 확인
+    result = cur.execute("SELECT * FROM StudentsData WHERE StudentNumber = ?", (id,)).fetchone()
+    if result == None:
+        user_book_list = book_list(id=id, pw=pw, ReturnData=3)
+        cur.execute("INSERT INTO StudentsData (StudentNumber, HashPassword, BookList, CrawlingDate) VALUES (?, ?, ?, ?)", (id, sha512_hash(pw), listTostr(user_book_list), now_time()))
+    else:
+        user_book_list = []
+        for book_code in strTolist(result[2]):
+            user_book_list.append(book_code[0])
 
     # 데이터베이스에 학번 추가 후, 해당 학번의 대출 리스트를 크롤링
-    user_book_list = book_list(id=id, pw=pw, ReturnData=3)
 
     # 크롤링에 실패하면 홈으로 리다이렉트(크롤러는 작동 중 오류가 발생하면 0을 리턴)
     if user_book_list == 0:
@@ -65,14 +69,13 @@ def inputData():
         return redirect("/")
     elif user_book_list == 1:
         print("대출 기록이 없습니다.")
-        cur.execute("INSERT INTO StudentsData (StudentNumber, HashPassword, BookList, CrawlingDate) VALUES (?, ?, ?, ?)", (id, sha512_hash(pw), listTostr(user_book_list), now_time()))
         return redirect("/")
     
     # 데이터베이스에 학번이 없으면 데이터베이스에 학번 추가
     else:
-        
-        re_books = recommand([item[0] for item in user_book_list])
-        cur.execute("INSERT INTO StudentsData (StudentNumber, HashPassword, BookList, CrawlingDate) VALUES (?, ?, ?, ?)", (id, sha512_hash(pw), listTostr(user_book_list), now_time()))
+        # re_books = recommand([item[0] for item in user_book_list])
+        re_books = recommand(user_book_list)
+        user_book_list = strTolist(result[2])
     conn.commit()
     cur.close()
     conn.close()
