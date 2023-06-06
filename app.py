@@ -7,24 +7,6 @@ from DataProcessing import sha512_hash, listTostr, strTolist, now_time, generate
 import sqlite3
 import time
 
-conn = sqlite3.connect("database/bookmate.db")
-cur = conn.cursor()
-
-try:
-    print("테이블 생성")
-    cur.execute(""" CREATE TABLE StudentsData(
-        StudentNumber INT(8) PRIMARY KEY,
-        HashPassword TEXT(128),
-        BookList TEXT,
-        CrawlingDate TEXT
-    );
-    """)
-    conn.commit()
-    cur.close()
-    conn.close()
-except:
-    print("테이블이 이미 존재합니다.")
-
 # 페이지 이름 설정
 app = Flask("Bookmate")
 
@@ -38,8 +20,6 @@ def home():
 @app.route("/UserData", methods=["POST"])
 def inputData():
     start_time = time.time()
-    conn = sqlite3.connect("database/bookmate.db")
-    cur = conn.cursor()
     id, pw = "", ""
     if request.method == "POST":
         # 사용자가 입력한 데이터를 받아옴
@@ -65,17 +45,12 @@ def inputData():
         return redirect("/")
     elif user_book_list == 1:
         print("대출 기록이 없습니다.")
-        cur.execute("INSERT INTO StudentsData (StudentNumber, HashPassword, BookList, CrawlingDate) VALUES (?, ?, ?, ?)", (id, sha512_hash(pw), listTostr(user_book_list), now_time()))
         return redirect("/")
     
     # 데이터베이스에 학번이 없으면 데이터베이스에 학번 추가
     else:
-        
         re_books = recommand([item[0] for item in user_book_list])
-        cur.execute("INSERT INTO StudentsData (StudentNumber, HashPassword, BookList, CrawlingDate) VALUES (?, ?, ?, ?)", (id, sha512_hash(pw), listTostr(user_book_list), now_time()))
-    conn.commit()
-    cur.close()
-    conn.close()
+        
     print("총 걸린 시간: {:.2f}초\n".format(time.time() - start_time))
     # 코드가 정상적으로 작동하면 SearchResult.html 페이지에 책 리스트 출력
     return render_template("SearchResult.html", bookinfos=user_book_list, student_number=id, re_books=re_books)
