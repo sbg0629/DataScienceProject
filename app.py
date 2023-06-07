@@ -19,6 +19,11 @@ try:
         CrawlingDate TEXT
     );
     """)
+    cur.execute(""" CREATE TABLE Book(
+        BookCode TEXT PRIMARY KEY,
+        BookLists TEXT
+    );
+    """)
 except:
     print("테이블이 이미 존재합니다.")
 
