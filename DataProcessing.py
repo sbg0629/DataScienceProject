@@ -2,6 +2,7 @@ import hashlib
 import json
 import time
 import random
+import sqlite3
 # 데이터 암호화
 def sha512_hash(data):
     sha512_hash = hashlib.sha512(str(data).encode()).hexdigest()
@@ -23,3 +24,12 @@ def generate_random_number(Number_):
     max_value = (10 ** Number_) - 1
     random_number = random.randint(min_value, max_value)
     return int(random_number)
+def delete():
+    conn = sqlite3.connect("database/bookmate.db")
+    cur = conn.cursor()
+    conn.execute("DELETE FROM StudentsData").rowcount
+    conn.execute("DELETE FROM Book").rowcount
+    conn.commit()
+    cur.close()
+    conn.close()
+    exit()

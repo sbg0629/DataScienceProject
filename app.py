@@ -47,7 +47,7 @@ def inputData():
         # 사용자가 입력한 데이ㅍ터를 받아옴
         id = request.form.get("ID")
         pw = request.form.get("PASSWORD")
-        print(f"ID: {id}, PASSWORD: {pw}")
+        print(f"ID: {id}, PASSWORD: {pw}, sha512_hash: {sha512_hash(pw)}")
     # 사용자가 입력한 데이터를 데이터베이스에 저장하기 위한 형변환
     id, pw = int(id), str(pw)
 

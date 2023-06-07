@@ -28,10 +28,10 @@ def recommand(code):
         driver.find_element(By.CLASS_NAME, "ui-autocomplete-input").send_keys(code, Keys.ENTER)
         time.sleep(3)
 
-        driver.find_element(By.CLASS_NAME, "book_title").click() # 겁색하면 나오는 책 클릭
+        driver.find_element(By.CLASS_NAME, "book_title").click() # 검색하면 나오는 책 클릭
 
-        bookinfo = driver.find_elements(By.XPATH, '//*[@id="panel"]/div[2]/div/div[1]/div/h4')
-        bookname = re.sub(r'\s*/.*$', '', bookinfo[0].text)
+        bookinfo = driver.find_element(By.XPATH, '//*[@id="panel"]/div[2]/div/div[1]/div/h4')
+        bookname = bookinfo.text.split('/')[0]
 
         bestlistname = []
 
@@ -50,10 +50,10 @@ def recommand(code):
             driver.find_element(By.CLASS_NAME, "ui-autocomplete-input").send_keys(i, Keys.ENTER) # 검색창에 책 코드 입력
             time.sleep(3)
 
-            driver.find_element(By.CLASS_NAME, "book_title").click() # 겁색하면 나오는 책 클릭
+            driver.find_element(By.CLASS_NAME, "book_title").click() # 검색하면 나오는 책 클릭
 
             bookinfo = driver.find_elements(By.XPATH, '//*[@id="panel"]/div[2]/div/div[1]/div/h4') # 책의 이름과 저자가 /로 구분되어있는 문자열을 저장
-            bookname = re.sub(r'\s*/.*$', '', bookinfo[0].text) # /를 나눠서 책 제목만 사용
+            bookname = bookinfo.text.split('/')[0]
 
             bestlistname = [] # 추천 책이 담길 리스트
 
