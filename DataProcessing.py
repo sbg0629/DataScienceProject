@@ -32,3 +32,4 @@ def delete():
     conn.commit()
     cur.close()
     conn.close()
+    exit()
