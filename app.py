@@ -47,7 +47,7 @@ def inputData():
         # 사용자가 입력한 데이터를 받아옴
         id = request.form.get("ID")
         pw = request.form.get("PASSWORD")
-        print(f"ID: {id}, PASSWORD: {pw}, sha512_hash: {sha512_hash(pw)}")
+        print(f"ID: {id}, sha512_hash: {sha512_hash(pw)}")
     # 사용자가 입력한 데이터를 데이터베이스에 저장하기 위한 형변환
     id, pw = int(id), str(pw)
 
@@ -78,7 +78,6 @@ def inputData():
     else:
         user_book_list = []
         for book_code in strTolist(result[2]):
-            print(f"book_code: {book_code}")
             user_book_list.append(book_code[0])
 
         # 책 코드만 저장
