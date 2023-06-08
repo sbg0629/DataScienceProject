@@ -44,7 +44,7 @@ def inputData():
     cur = conn.cursor()
     id, pw = "", ""
     if request.method == "POST":
-        # 사용자가 입력한 데이ㅍ터를 받아옴
+        # 사용자가 입력한 데이터를 받아옴
         id = request.form.get("ID")
         pw = request.form.get("PASSWORD")
         print(f"ID: {id}, PASSWORD: {pw}, sha512_hash: {sha512_hash(pw)}")
@@ -101,9 +101,10 @@ def inputData():
     cur.close()
     conn.close()
     # print("총 걸린 시간: {:.2f}초\n".format(time.time() - start_time))
-    print("총 걸린 시간: {}초\n".format(time.time() - start_time))
+    end_time = time.time() - start_time
+    print("총 걸린 시간: {}초\n".format(end_time))
     # 코드가 정상적으로 작동하면 SearchResult.html 페이지에 책 리스트 출력
-    return render_template("SearchResult.html", bookinfos=user_book_list, student_number=id, re_books=recommand_list)
+    return render_template("SearchResult.html", bookinfos=user_book_list, student_number=id, re_books=recommand_list, loading_time=end_time)
 
 # 이스터 에그, html 연습용
 @app.route("/EarthAndMoon")
