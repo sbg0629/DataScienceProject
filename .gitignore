@@ -6,7 +6,7 @@ chromedriver.exe
 test.html
 BookList.txt
 bookmate.db
-
+*.csv
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
