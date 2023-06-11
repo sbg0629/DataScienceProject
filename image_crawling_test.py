@@ -19,7 +19,7 @@ def save_images(search_term, num_images):
             response.raise_for_status()
             
             # 이미지 파일 저장
-            with open(f"book{i}.jpg", "wb") as file:
+            with open(f"book{i}.png", "wb") as file:
                 for chunk in response.iter_content(chunk_size=8192):
                     file.write(chunk)
                     
@@ -30,8 +30,3 @@ def save_images(search_term, num_images):
         
         if i+1 >= num_images:
             break
-
-search_term = ["비욘드 그래비티"]
-
-save_images(search_term, 2)
- 
