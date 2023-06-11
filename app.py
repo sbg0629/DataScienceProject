@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect
 
 from crawler import book_list
-from algorithm_test import recommand
+from algorithm_test import recommand, category
 from DataProcessing import sha512_hash, listTostr, strTolist, now_time, generate_random_number
 
 import sqlite3
@@ -24,8 +24,8 @@ try:
     );
     """)
     cur.execute(""" CREATE TABLE Book(
-        BookCode TEXT PRIMARY KEY,
-        BookLists TEXT
+        BookName TEXT PRIMARY KEY,
+        BookCategory TEXT
     );
     """)
 except:
@@ -58,40 +58,40 @@ def inputData():
     # 데이터베이스에 학번에 있는지 확인
     result = cur.execute("SELECT * FROM StudentsData WHERE StudentNumber = ?", (id,)).fetchone()
     if result == None:
-        user_book_list = book_list(id=id, pw=pw, ReturnData=3)
+        user_book_info_list = book_list(id=id, pw=pw, ReturnData=3)
         # 크롤링에 실패하면 홈으로 리다이렉트(크롤러는 작동 중 오류가 발생하면 0을 리턴)
-        if user_book_list == 0:
+        if user_book_info_list == 0:
             print("웹 페이지 로딩 오류")
             # 문제가 발생하면 홈으로 리다이렉트
             return redirect("/")
-        elif user_book_list == 1:
+        elif user_book_info_list == 1:
             print("대출 기록이 없습니다.")
-            cur.execute("INSERT INTO StudentsData (StudentNumber, HashPassword, BookList, CrawlingDate) VALUES (?, ?, ?, ?)", (id, sha512_hash(pw), listTostr(user_book_list), now_time()))
+            cur.execute("INSERT INTO StudentsData (StudentNumber, HashPassword, BookList, CrawlingDate) VALUES (?, ?, ?, ?)", (id, sha512_hash(pw), listTostr(user_book_info_list), now_time()))
             conn.commit()
             cur.close()
             conn.close()
             return redirect("/")
         
-        cur.execute("INSERT INTO StudentsData (StudentNumber, HashPassword, BookList, CrawlingDate) VALUES (?, ?, ?, ?)", (id, sha512_hash(pw), listTostr(user_book_list), now_time()))
+        cur.execute("INSERT INTO StudentsData (StudentNumber, HashPassword, BookList, CrawlingDate) VALUES (?, ?, ?, ?)", (id, sha512_hash(pw), listTostr(user_book_info_list), now_time()))
 
-        # 책 코드만 저장
-        re_books = [item[1] for item in user_book_list]
+        # 책 이름만 저장
+        user_book_list = [item[1] for item in user_book_info_list]
     elif result[1] != sha512_hash(pw):
         print(f"아이디: {id}에 대한 비밀번호가 틀렸습니다.")
         return redirect("/")
     else:
-        user_book_list = []
-        for book_code in strTolist(result[2]):
+        user_book_info_list = []
+        for book_name in strTolist(result[2]):
             # 0: 책 코드, 1: 책 이름, 2: 지은이
-            user_book_list.append(book_code[1])
-        # 책 코드만 저장
-        re_books = user_book_list
+            user_book_info_list.append(book_name[1])
+        # 책 이름만 저장
+        user_book_list = user_book_info_list
 
         # 저장 웹 페이지에 출력하기 위함, 데이터를 다시 코드, 이름, 저자의 형태로 변환
-        user_book_list = strTolist(result[2])
+        user_book_info_list = strTolist(result[2])
 
     recommand_list = []
-    for book_code in re_books:
+    for book_code in user_book_list:
         result = cur.execute("SELECT * FROM Book WHERE BookCode = ?", (book_code,)).fetchone()
         if result == None:
             i = recommand(book_code)
@@ -112,7 +112,7 @@ def inputData():
     end_time = time.time() - start_time
     print("총 걸린 시간: {}초\n".format(end_time))
     # 코드가 정상적으로 작동하면 SearchResult.html 페이지에 책 리스트 출력
-    return render_template("SearchResult.html", bookinfos=user_book_list, student_number=id, re_books=recommand_list, loading_time=end_time)
+    return render_template("SearchResult.html", bookinfos=user_book_info_list, student_number=id, re_books=recommand_list, loading_time=end_time)
 
 # 이스터 에그, html 연습용
 @app.route("/EarthAndMoon")
