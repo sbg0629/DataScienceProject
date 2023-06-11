@@ -71,7 +71,7 @@ def inputData():
         cur.execute("INSERT INTO StudentsData (StudentNumber, HashPassword, BookList, CrawlingDate) VALUES (?, ?, ?, ?)", (id, sha512_hash(pw), listTostr(user_book_list), now_time()))
 
         # 책 코드만 저장
-        re_books = [item[0] for item in user_book_list]
+        re_books = [item[1] for item in user_book_list]
     elif result[1] != sha512_hash(pw):
         print(f"아이디: {id}에 대한 비밀번호가 틀렸습니다.")
         return redirect("/")
@@ -79,8 +79,7 @@ def inputData():
         user_book_list = []
         for book_code in strTolist(result[2]):
             # 0: 책 코드, 1: 책 이름, 2: 지은이
-            user_book_list.append(book_code[0])
-
+            user_book_list.append(book_code[1])
         # 책 코드만 저장
         re_books = user_book_list
 
