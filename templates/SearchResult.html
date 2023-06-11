@@ -24,18 +24,23 @@
     <main class="container">
       <hgroup>
         <h2>{{ student_number }}님의 대출 기록</h2>
+        <h6>총 로딩 시간: {{ loading_time }}초</h6>
           {% for bookcode in bookinfos %}
           <br>
           <article class="grid">
-            책 코드: {{ bookcode[0] }}<br>
-            책 이름: {{ bookcode[1] }}<br>
-            저자: {{ bookcode[2] }}
-            <h6>
-              추천 도서
-              <br>
+            <spane>
+              책 코드: {{ bookcode[0] }}<br>
+              책 이름: {{ bookcode[1] }}<br>
+              저자: {{ bookcode[2] }}<br>
+            </spane>
+            <div>
+              <h6 style="display:inline;" >추천 도서</h6>
               {% for re_book in re_books %}
-                {{ re_book }}<br>
+                {% for book in re_book[bookcode[1]] %}
+                  <br>{{ loop.index }}. {{ book }}
+                {% endfor %}
               {% endfor %}
+            </div>
           </article>
           {% endfor %}
       </hgroup>
