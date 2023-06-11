@@ -78,6 +78,7 @@ def inputData():
     else:
         user_book_list = []
         for book_code in strTolist(result[2]):
+            # 0: 책 코드, 1: 책 이름, 2: 지은이
             user_book_list.append(book_code[0])
 
         # 책 코드만 저장
