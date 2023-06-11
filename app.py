@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect
 
 from crawler import book_list
-from algorithm_test import recommand
+from algorithm_test import recommand, category
 from DataProcessing import sha512_hash, listTostr, strTolist, now_time, generate_random_number
 
 import sqlite3
@@ -20,8 +20,8 @@ try:
     );
     """)
     cur.execute(""" CREATE TABLE Book(
-        BookCode TEXT PRIMARY KEY,
-        BookLists TEXT
+        BookName TEXT PRIMARY KEY,
+        BookCategory TEXT
     );
     """)
 except:
@@ -77,9 +77,9 @@ def inputData():
         return redirect("/")
     else:
         user_book_list = []
-        for book_code in strTolist(result[2]):
+        for book_name in strTolist(result[2]):
             # 0: 책 코드, 1: 책 이름, 2: 지은이
-            user_book_list.append(book_code[1])
+            user_book_list.append(book_name[1])
         # 책 코드만 저장
         re_books = user_book_list
 
