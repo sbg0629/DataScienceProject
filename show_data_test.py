@@ -9,7 +9,7 @@ import os
 
 plt.rcParams['font.family'] = 'Malgun Gothic'
 
-def category(name):
+def show_data(name):
     driver = webdriver.Chrome()
     driver.get("https://www.kyobobook.co.kr/")
     driver.implicitly_wait(60)
@@ -30,7 +30,7 @@ list1 = ["비욘드 그래비티", "마이클센델 정의란 무엇인가", "�
 
 p = []
 for row in list1:
-    category_name = category(row)
+    category_name = show_data(row)
     category_name = category_name.replace("/", "")  # Remove special characters
     p.append(category_name)
 

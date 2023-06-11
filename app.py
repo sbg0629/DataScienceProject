@@ -104,7 +104,6 @@ def inputData():
         f = "book{i+1}.png"
         cv2.imshow()
         f.remove()
-
     conn.commit()
     cur.close()
     conn.close()
