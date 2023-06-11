@@ -71,7 +71,7 @@ def inputData():
         cur.execute("INSERT INTO StudentsData (StudentNumber, HashPassword, BookList, CrawlingDate) VALUES (?, ?, ?, ?)", (id, sha512_hash(pw), listTostr(user_book_info_list), now_time()))
 
         # 책 이름만 저장
-        re_books = [item[1] for item in user_book_info_list]
+        user_book_list = [item[1] for item in user_book_info_list]
     elif result[1] != sha512_hash(pw):
         print(f"아이디: {id}에 대한 비밀번호가 틀렸습니다.")
         return redirect("/")
@@ -81,13 +81,13 @@ def inputData():
             # 0: 책 코드, 1: 책 이름, 2: 지은이
             user_book_info_list.append(book_name[1])
         # 책 이름만 저장
-        re_books = user_book_info_list
+        user_book_list = user_book_info_list
 
         # 저장 웹 페이지에 출력하기 위함, 데이터를 다시 코드, 이름, 저자의 형태로 변환
         user_book_info_list = strTolist(result[2])
 
     recommand_list = []
-    for book_code in re_books:
+    for book_code in user_book_list:
         result = cur.execute("SELECT * FROM Book WHERE BookCode = ?", (book_code,)).fetchone()
         if result == None:
             i = recommand(book_code)
