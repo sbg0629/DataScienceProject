@@ -7,6 +7,10 @@ from DataProcessing import sha512_hash, listTostr, strTolist, now_time, generate
 import sqlite3
 import time
 
+from image_crawling_test import save_images
+import os
+import cv2
+
 conn = sqlite3.connect("database/bookmate.db")
 cur = conn.cursor()
 
@@ -95,6 +99,11 @@ def inputData():
             cur.execute("INSERT INTO Book (BookCode, BookLists) VALUES (?, ?)", (book_code, listTostr(i)))
         else:
             recommand_list.append(strTolist(result[1]))
+    save_images(recommand(book_code),len(recommand(book_list)+1))
+    for i in range(len(recommand(book_code))+1):
+        f = "book{i+1}.png"
+        cv2.imshow()
+        f.remove()
 
     conn.commit()
     cur.close()
