@@ -74,23 +74,30 @@ def recommand(code):
     return list # 리스트 리턴
 
 # 책 카테고리를 알려주는 함수
-def category(name):
+def category(names):
+    book_categorys = {}
     driver = webdriver.Chrome()
+    driver.maximize_window()
+    
     driver.get("https://www.kyobobook.co.kr/")
     driver.implicitly_wait(60)
-
-    # 책 이름 검색
-    driver.find_elements(By.CLASS_NAME, "ip_gnb_search")[0].send_keys(name, Keys.ENTER)
-    driver.implicitly_wait(60)
     
-    # 검색 목록에서 첫번째 책 클릭
-    driver.find_elements(By.CLASS_NAME, "prod_info")[0].click()
-    driver.implicitly_wait(60)
+    if type(names) is str:
+        names = [names]
 
-    # 책 분야 확인
-    book_category = driver.find_elements(By.CLASS_NAME, "btn_sub_depth")[2]
-    book_category = book_category.text
+    for name in names:
+        # 책 이름 검색
+        driver.find_elements(By.CLASS_NAME, "ip_gnb_search")[0].send_keys(name, Keys.ENTER)
+        driver.implicitly_wait(60)
+        
+        # 검색 목록에서 첫번째 책 클릭
+        driver.find_elements(By.CLASS_NAME, "prod_info")[0].click()
+        driver.implicitly_wait(60)
+
+        # 책 분야 확인
+        book_category = driver.find_elements(By.CLASS_NAME, "btn_sub_depth")[2].text
+        book_categorys[name] = book_category
+        print(f"{name}의 분야: {book_category}")
     driver.close()
-    print(f"{name}의 분야: {book_category}")
 
-    return book_category
+    return book_categorys
