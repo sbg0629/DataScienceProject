@@ -99,12 +99,7 @@ def inputData():
             cur.execute("INSERT INTO Book (BookCode, BookLists) VALUES (?, ?)", (book_code, listTostr(i)))
         else:
             recommand_list.append(strTolist(result[1]))
-    save_images(recommand(book_code),len(recommand(book_list)+1))
-    for i in range(len(recommand(book_code))+1):
-        f = "book{i+1}.png"
-        cv2.imshow()
-        f.remove()
-    conn.commit()
+    conn.commit() #오류 수정
     cur.close()
     conn.close()
     # print("총 걸린 시간: {:.2f}초\n".format(time.time() - start_time))
