@@ -90,7 +90,7 @@ def category(name):
     # 책 분야 확인
     book_category = driver.find_elements(By.CLASS_NAME, "btn_sub_depth")[2]
     book_category = book_category.text
-    
+    driver.close()
     print(f"{name}의 분야: {book_category}")
 
     return book_category
