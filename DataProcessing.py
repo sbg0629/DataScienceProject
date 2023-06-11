@@ -32,4 +32,5 @@ def delete():
     conn.commit()
     cur.close()
     conn.close()
+    print("Delete all data in database")
     exit()
