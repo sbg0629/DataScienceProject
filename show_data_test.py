@@ -26,23 +26,25 @@ def show_data(name):
 
     return book_category
 
-list1 = ["비욘드 그래비티", "마이클센델 정의란 무엇인가", "오늘밤 세계에서 이 사랑이 사라진다 해도"] #test_list
+def save_and_show_data(num):
+    p = []
+    for row in num:
+        category_name = show_data(row)
+        category_name = category_name.replace("/", "")  # Remove special characters
+        p.append(category_name)
 
-p = []
-for row in list1:
-    category_name = show_data(row)
-    category_name = category_name.replace("/", "")  # Remove special characters
-    p.append(category_name)
+    # 그래프 생성
+    plt.pie(np.ones(len(p)), labels=p, autopct='%.2f%%')
 
-# 그래프 생성 #손봉균의 마무으리~
-plt.pie(np.ones(len(p)), labels=p, autopct='%.2f')
+    # 그래프를 이미지 파일로 저장
+    plt.savefig("pie_chart.png")
 
-# 그래프를 이미지 파일로 저장
-plt.savefig("pie_data.png")
+    # 이미지 파일 삭제
+    if os.path.exists("pie_chart.png"):
+        os.remove("pie_chart.png")
+        print("이미지 파일이 삭제되었습니다.")
 
-# 이미지 파일 삭제
-if os.path.exists("pie_data.png"):
-    os.remove("pie_data.png")
-    print("이미지 파일이 삭제되었습니다.")
+    plt.show()
 
-plt.show()
+list1 = ["비욘드 그래비티", "마이클 샌델 정의란 무엇인가", "오늘밤 세계에서 이 사랑이 사라진다 해도"]
+save_and_show_data(list1)
